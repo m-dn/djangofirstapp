@@ -1,6 +1,10 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="{% static 'css/StockTrading.css' %}">
     <meta charset="UTF-8">
     <title>Stock Trading</title>
 </head>
@@ -8,5 +12,15 @@
   <div>
       <h1><a href="/">Stock Trading</a></h1>
   </div>
+
+    {% for stock in stocks %}
+        <div>
+         <p>value of: {{ stock.price_date }}</p>
+         <b>{{ stock }}</b>
+         <h2><a href="">{{ stock.short_form }}</a></h2>
+         <h2><a href="">{{ stock.price }}</a></h2>
+         <p>{{ stock.text|linebreaksbr }}</p>
+        </div>
+    {% endfor %}
 </body>
 </html>
