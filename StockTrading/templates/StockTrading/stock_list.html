@@ -1,26 +1,77 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="{% static 'css/StockTrading.css' %}">
-    <meta charset="UTF-8">
-    <title>Stock Trading</title>
-</head>
-<body>
-  <div>
-      <h1><a href="/">Stock Trading</a></h1>
-  </div>
+{% extends "StockTrading/base.html" %}
 
-    {% for stock in stocks %}
-        <div>
-         <p>value of: {{ stock.price_date }}</p>
-         <b>{{ stock }}</b>
-         <h2><a href="">{{ stock.short_form }}</a></h2>
-         <h2><a href="">{{ stock.price }}</a></h2>
-         <p>{{ stock.text|linebreaksbr }}</p>
-        </div>
-    {% endfor %}
-</body>
-</html>
+{% block content %}
+
+<table class="table table-borderless">
+    <thead class="border-bottom font-weight-bold">
+    <tr>
+        <td>Company Name</td>
+        <td>WSE CODE</td>
+        <td>Stock value</td>
+        <td>Value date</td>
+        <td></td>
+    </tr>
+    </thead>
+    <tbody>
+        {% for stock in stocks %}
+            <tr>
+                <td>{{stock.company_name}}</td>
+                <td>{{stock.short_form}}</td>
+                <td>{{stock.price}}</td>
+                <td>{{stock.price_date}}</td>
+                <td>
+                    <a href="{% url 'stock_update' stock.id %}" class="btn text-secondary px-1">
+                        <i class="far fa-edit fa-lg"></i>
+                    </a>
+                    <form action="{% url 'stock_delete' stock.id" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn">
+                            <i class="fas fa-trash-alt fa-lg text-danger float-right"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+ <div class="row">
+     <div class="col-md-6">
+         <a href="{% url 'stock_insert' %}" class="btn btn-secondary btn-success btn-lg">
+           <i class="fas fa-plus-square"></i> Add new stock
+        </a>
+     </div>
+     <div class="col-md-4">
+         <a href="{% url 'stock_list' %}" class="btn btn-secondary btn-block btn-lg">
+             <i class="fas fa-bars"></i> Back to list
+         </a>
+     </div>
+ </div>
+
+{% endblock content%}
+
+<!--{% load staticfiles %}-->
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">-->
+<!--    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">-->
+<!--    <link rel="stylesheet" href="{% static 'css/StockTrading.css' %}">-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Stock List</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--  <div>-->
+<!--      <h1><a href="/">Stock List</a></h1>-->
+<!--  </div>-->
+
+<!--    {% for stock in stocks %}-->
+<!--        <div>-->
+<!--         <p>value of: {{ stock.price_date }}</p>-->
+<!--         <b>{{ stocks }}</b>-->
+<!--         <h2><a href="">{{ stock.short_form }}</a></h2>-->
+<!--         <h2><a href="">{{ stock.price }}</a></h2>-->
+<!--         <p>{{ stock.text|linebreaksbr }}</p>-->
+<!--        </div>-->
+<!--    {% endfor %}-->
+<!--</body>-->
+<!--</html>-->

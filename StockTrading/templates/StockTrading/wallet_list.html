@@ -1,0 +1,46 @@
+{% extends "StockTrading/base.html" %}
+
+{% block content %}
+
+<table class="table table-borderless">
+    <thead class="border-bottom font-weight-bold">
+    <tr>
+        <td>Company Name</td>
+        <td>Quantity</td>
+        <td></td>
+    </tr>
+    </thead>
+    <tbody>
+        {% for stock in stocks %}
+            <tr>
+                <td>{{stock.company_name}}</td>
+                <td>{{stock.quantity}}</td>
+                <td>
+                    <a href="{% url 'wallet_update' wallet.id %}" class="btn text-secondary px-1">
+                        <i class="far fa-edit fa-lg"></i>
+                    </a>
+                    <form action="{% url 'wallet_delete' wallet.id" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn">
+                            <i class="fas fa-trash-alt fa-lg text-danger float-right"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+ <div class="row">
+     <div class="col-md-6">
+         <a href="{% url 'wallet_insert' %}" class="btn btn-secondary btn-success btn-lg">
+           <i class="fas fa-plus-square"></i> Add new stock
+         </a>
+     </div>
+     <div class="col-md-4">
+         <a href="{% url 'wallet_list' %}" class="btn btn-secondary btn-block btn-lg">
+             <i class="fas fa-bars"></i> Back to list
+         </a>
+     </div>
+ </div>
+
+{% endblock content%}
