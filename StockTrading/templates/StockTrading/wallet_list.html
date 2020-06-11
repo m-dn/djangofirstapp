@@ -1,8 +1,9 @@
 {% extends "StockTrading/base.html" %}
 
+
 {% block content %}
 
-<table class="table table-borderless">
+<table class="table table-borderless table-striped">
     <thead class="border-bottom font-weight-bold">
     <tr>
         <td>Company Name</td>
@@ -11,15 +12,15 @@
     </tr>
     </thead>
     <tbody>
-        {% for stock in stocks %}
+        {% for wallet in wallets %}
             <tr>
-                <td>{{stock.company_name}}</td>
-                <td>{{stock.quantity}}</td>
+                <td>{{wallet.company_name}}</td>
+                <td>{{wallet.quantity}}</td>
                 <td>
                     <a href="{% url 'wallet_update' wallet.id %}" class="btn text-secondary px-1">
                         <i class="far fa-edit fa-lg"></i>
                     </a>
-                    <form action="{% url 'wallet_delete' wallet.id" method="post" class="d-inline">
+                    <form action="{% url 'wallet_delete' wallet.id %}" method="post" class="d-inline">
                         {% csrf_token %}
                         <button type="submit" class="btn">
                             <i class="fas fa-trash-alt fa-lg text-danger float-right"></i>
@@ -31,16 +32,16 @@
     </tbody>
 </table>
  <div class="row">
-     <div class="col-md-6">
+     <div class="col-md-5">
          <a href="{% url 'wallet_insert' %}" class="btn btn-secondary btn-success btn-lg">
            <i class="fas fa-plus-square"></i> Add new stock
          </a>
      </div>
-     <div class="col-md-4">
-         <a href="{% url 'wallet_list' %}" class="btn btn-secondary btn-block btn-lg">
-             <i class="fas fa-bars"></i> Back to list
-         </a>
-     </div>
+<!--     <div class="col-md-4">-->
+<!--         <a href="{% url 'wallet_list' %}" class="btn btn-secondary btn-block btn-lg">-->
+<!--             <i class="fas fa-bars"></i> Back to list-->
+<!--         </a>-->
+<!--     </div>-->
  </div>
 
 {% endblock content%}

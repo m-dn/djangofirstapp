@@ -1,11 +1,10 @@
 from django.shortcuts import render, redirect
 from .models import Stock, myWallet
-from .forms import StockForm
-from .forms import MyWalletForm
+from .forms import StockForm, MyWalletForm
 from django.contrib.auth.decorators import login_required
 
-# def home(request):
-#     return render(request, 'StockTrading/home.html')
+def home(request):
+    return redirect('/accounts/login')
 
 @login_required()
 def stock_list(request):
@@ -30,19 +29,19 @@ def stock_form(request, id=0):
             form = StockForm(request.POST, instance=stock)
         if form.is_valid():
             form.save()
-        return redirect('StockTrading/stocklist.html')
+        return redirect('/stocktrading/stocklist')
 
 @login_required()
 def stock_delete(request, id):
     stock = Stock.objects.get(pk=id)
-    Stock.delete()
-    return
+    stock.delete()
+    return redirect('/stocktrading/stocklist')
 
 
 @login_required()
 def wallet_list(request):
-    wallet = myWallet.objects.all()
-    return render(request, 'StockTrading/wallet_list.html', {'wallet': wallet})
+    wallets = myWallet.objects.all()
+    return render(request, 'StockTrading/wallet_list.html', {'wallets': wallets})
 
 
 @login_required()
@@ -62,10 +61,10 @@ def wallet_form(request, id=0):
             form = MyWalletForm(request.POST, instance=wallet)
         if form.is_valid():
             form.save()
-        return redirect('StockTrading/walletlist.html')
+        return redirect('/stocktrading/walletlist')
 
 @login_required()
 def wallet_delete(request, id):
     wallet = myWallet.objects.get(pk=id)
-    myWallet.delete()
-    return
+    wallet.delete()
+    return redirect('/stocktrading/walletlist')

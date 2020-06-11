@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<table class="table table-borderless">
+<table class="table table-borderless table-striped">
     <thead class="border-bottom font-weight-bold">
     <tr>
         <td>Company Name</td>
@@ -23,7 +23,7 @@
                     <a href="{% url 'stock_update' stock.id %}" class="btn text-secondary px-1">
                         <i class="far fa-edit fa-lg"></i>
                     </a>
-                    <form action="{% url 'stock_delete' stock.id" method="post" class="d-inline">
+                    <form action="{% url 'stock_delete' stock.id %}" method="post" class="d-inline">
                         {% csrf_token %}
                         <button type="submit" class="btn">
                             <i class="fas fa-trash-alt fa-lg text-danger float-right"></i>
@@ -34,17 +34,17 @@
         {% endfor %}
     </tbody>
 </table>
- <div class="row">
-     <div class="col-md-6">
+<!-- <div class="row">-->
+     <div class="col-md-3">
          <a href="{% url 'stock_insert' %}" class="btn btn-secondary btn-success btn-lg">
            <i class="fas fa-plus-square"></i> Add new stock
         </a>
      </div>
-     <div class="col-md-4">
-         <a href="{% url 'stock_list' %}" class="btn btn-secondary btn-block btn-lg">
-             <i class="fas fa-bars"></i> Back to list
-         </a>
-     </div>
+<!--     <div class="col-md-4">-->
+<!--         <a href="{% url 'stock_list' %}" class="btn btn-secondary btn-block btn-lg">-->
+<!--             <i class="fas fa-bars"></i> Back to list-->
+<!--         </a>-->
+<!--     </div>-->
  </div>
 
 {% endblock content%}

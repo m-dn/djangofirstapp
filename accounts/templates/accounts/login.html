@@ -1,10 +1,22 @@
-{% extends 'StockTrading/base.html' %}
+{% extends 'accounts/base.html' %}
 
 {% block content%}
-    <h1>SIGN IN</h1>
+<div>
     <form class="site-form" action="/accounts/login/" method="post">
         {% csrf_token %}
         {{ form }}
-        <input type="submit" value="SIGN IN">
+        <br>
+        <input type="submit" class="btn btn-outline-info btn-lg" value="SIGN IN">
     </form>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <h5> Don't have account? </h5>
+        <form class="site-form" action="/accounts/signup/" method="post">
+            {% csrf_token %}
+            <input type="submit" class="btn btn-outline-info btn-lg" value=" SIGN UP ">
+        </form>
+</div>
 {% endblock %}

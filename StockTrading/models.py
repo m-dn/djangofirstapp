@@ -20,6 +20,10 @@ class myWallet(models.Model):
     company_name = models.ForeignKey(Stock, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
 
+    def publish(self):
+        self.save()
+
     def __str__(self):
         return str(self.company_name)
+
 

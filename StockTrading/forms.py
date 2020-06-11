@@ -30,3 +30,4 @@ class MyWalletForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(MyWalletForm, self).__init__(*args, **kwargs)
+        self.fields['company_name'].empty_label = "Select Company"
