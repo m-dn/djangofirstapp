@@ -1,6 +1,6 @@
 from django import forms
 from .models import Stock
-from .models import myWallet
+from .models import MyWallet
 
 
 class StockForm(forms.ModelForm):
@@ -21,7 +21,7 @@ class StockForm(forms.ModelForm):
 
 class MyWalletForm(forms.ModelForm):
     class Meta:
-        model = myWallet
+        model = MyWallet
         fields = ('company_name', 'quantity')
         labels = {
             'company_name': 'Company Name',

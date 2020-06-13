@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Stock, myWallet
+from .models import Stock, MyWallet, Broker
 from .forms import StockForm, MyWalletForm
 from django.contrib.auth.decorators import login_required
 
@@ -8,7 +8,7 @@ def home(request):
 
 @login_required()
 def stock_list(request):
-    stocks = Stock.objects.all()
+    stocks = Stock.objects.order_by('company_name')
     return render(request, 'StockTrading/stock_list.html', {'stocks': stocks})
 
 
@@ -31,6 +31,7 @@ def stock_form(request, id=0):
             form.save()
         return redirect('/stocktrading/stocklist')
 
+
 @login_required()
 def stock_delete(request, id):
     stock = Stock.objects.get(pk=id)
@@ -40,7 +41,10 @@ def stock_delete(request, id):
 
 @login_required()
 def wallet_list(request):
-    wallets = myWallet.objects.all()
+    wallets = MyWallet.objects.order_by('company_name')
+    for wallet in wallets:
+        stock = Stock.objects.get(company_name=wallet.company_name)
+        setattr(wallet, 'value',  wallet.quantity*stock.price)
     return render(request, 'StockTrading/wallet_list.html', {'wallets': wallets})
 
 
@@ -50,21 +54,33 @@ def wallet_form(request, id=0):
         if id == 0:
             form = MyWalletForm()
         else:
-            wallet = myWallet.objects.get(pk=id)
+            wallet = MyWallet.objects.get(pk=id)
             form = MyWalletForm(instance=wallet)
         return render(request, 'StockTrading/wallet_form.html', {'form': form})
     else:
         if id == 0:
             form = MyWalletForm(request.POST)
         else:
-            wallet = myWallet.objects.get(pk=id)
+            wallet = MyWallet.objects.get(pk=id)
             form = MyWalletForm(request.POST, instance=wallet)
         if form.is_valid():
+            quantity = form.data['quantity']
+            company_name = form.data['company_name']
+            stock = Stock.objects.get(pk=company_name)
+            value = int(quantity) * float(stock.price)
+            broker = Broker.objects.all()[0]  # bierzesz pierwszego lepszego brokera i jego cash
+
+            # if value > request.user.cash:
+            if value > broker.cash:
+                return render(request, 'StockTrading/wallet_form.html', {'form': form, 'error': 'Your budget is too small to buy as many stocks'})
             form.save()
         return redirect('/stocktrading/walletlist')
 
+
 @login_required()
 def wallet_delete(request, id):
-    wallet = myWallet.objects.get(pk=id)
+    wallet = MyWallet.objects.get(pk=id)
     wallet.delete()
     return redirect('/stocktrading/walletlist')
+
+

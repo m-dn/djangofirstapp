@@ -9,7 +9,7 @@ def signup_view(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-        return redirect('/stocktrading/stocklist')
+        return redirect('/accounts/signup')
     else:
         form = UserCreationForm()
     return render(request, 'accounts/signup.html', {'form': form})
@@ -31,3 +31,5 @@ def logout_view(request):
     if request.method == 'POST':
         logout(request)
     return redirect('/accounts/login')
+
+

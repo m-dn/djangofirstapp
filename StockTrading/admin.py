@@ -1,6 +1,7 @@
 from django.contrib import admin
-from .models import Stock
-from .models import myWallet
+from .models import Stock, Broker
+from .models import MyWallet
 
 admin.site.register(Stock)
-admin.site.register(myWallet)
+admin.site.register(MyWallet)
+admin.site.register(Broker)
