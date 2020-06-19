@@ -1,6 +1,5 @@
 from django.contrib import admin
-from .models import Stock, Broker
-from .models import MyWallet
+from .models import Stock, Broker, MyWallet
 
 admin.site.register(Stock)
 admin.site.register(MyWallet)

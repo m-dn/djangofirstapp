@@ -22,7 +22,6 @@ class Stock(models.Model):
     price = models.DecimalField(max_digits=8, decimal_places=2, validators=[validator])
     price_date = models.DateTimeField(default=timezone.now)
 
-
     def publish(self):
         self.price_date = timezone.now()
         self.save()
@@ -35,7 +34,6 @@ class MyWallet(models.Model):
     company_name = models.ForeignKey(Stock, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
     broker = models.ForeignKey(Broker, on_delete=models.CASCADE, null=True, blank=True)
-
 
     def publish(self):
         self.save()

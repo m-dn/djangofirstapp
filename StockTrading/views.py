@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
-from .models import Stock, MyWallet, Broker
+from .models import Stock, MyWallet
+from .models import Broker
 from .forms import StockForm, MyWalletForm
 from django.contrib.auth.decorators import login_required
 
@@ -68,9 +69,7 @@ def wallet_form(request, id=0):
             company_name = form.data['company_name']
             stock = Stock.objects.get(pk=company_name)
             value = int(quantity) * float(stock.price)
-            broker = Broker.objects.all()[0]  # bierzesz pierwszego lepszego brokera i jego cash
-
-            # if value > request.user.cash:
+            broker = Broker.objects.all()[0]  #0 because first user has assigned 'cash'
             if value > broker.cash:
                 return render(request, 'StockTrading/wallet_form.html', {'form': form, 'error': 'Your budget is too small to buy as many stocks'})
             form.save()
